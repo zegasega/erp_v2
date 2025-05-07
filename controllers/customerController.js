@@ -1,6 +1,25 @@
 const customerService = require('../services/customerService');
 
 class CustomerController {
+
+    // get user by email
+    async getCustomerByEmail(req, res) {
+        try {
+            
+            const customer = await customerService.getCustomersWithEmailDomain(req.params.email);
+            res.json({
+                success: true,
+                data: customer
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+
     // Tüm müşterileri getir
     async getAllCustomers(req, res) {
         try {
