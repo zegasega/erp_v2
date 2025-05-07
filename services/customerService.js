@@ -1,10 +1,19 @@
 const BaseService = require("../core/baseService");
 const Customer = require("../models/customerModel");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 class CustomerService extends BaseService {
     constructor() {
         super(Customer);
+    }
+
+    async getCustomerByEmail(email) {
+        try {
+            const customer = await this.findOne({where : email})
+        } catch (error) {
+            console.log("Error")
+            
+        }
     }
 
     async getCustomersWithEmailDomain(domain) {
@@ -25,13 +34,13 @@ class CustomerService extends BaseService {
     }
     
     
-    async create(data) {
-        try {
-            return await super.create(data);
-        } catch (error) {
-            throw error;
-        }
-    }
+    // async create(data) {
+    //     try {
+    //         return await super.create(data);
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
 
     async getActiveAllCustomers(){
         const options = {
