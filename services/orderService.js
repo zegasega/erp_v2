@@ -1,4 +1,4 @@
-const BaseService = require('../core/BaseService');
+const BaseService = require('../core/baseService');
 const Order = require('../models/orderModel');
 
 class OrderService extends BaseService {

@@ -1,11 +1,30 @@
 const BaseService = require("../core/baseService");
 const Customer = require("../models/customerModel");
+const { Op } = require("sequelize");
 
 class CustomerService extends BaseService {
     constructor() {
         super(Customer);
     }
 
+    async getCustomersWithEmailDomain(domain) {
+        const options = {
+            where: {
+                email: {
+                    [Op.like]: `%@${domain}` // emaile gore filtreleme yapıyoruz
+                },
+                active: true
+            },
+            order: [['createdAt', 'DESC']]
+        };
+        try {
+            return await this.findAll(options);
+        } catch (error) {
+            throw error;
+        }
+    }
+    
+    
     async create(data) {
         try {
             return await super.create(data);
@@ -44,7 +63,6 @@ class CustomerService extends BaseService {
         }
     }
 
-    // Aktif müşterileri getir
     async getActiveCustomers() {
         try {
             return await this.findAll({
@@ -55,7 +73,6 @@ class CustomerService extends BaseService {
         }
     }
 
-    // Müşteriyi aktif/pasif yap
     async toggleActive(id) {
         try {
             const customer = await this.findByPk(id);
