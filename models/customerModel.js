@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const { Hooks } = require('sequelize/lib/hooks');
+const { hashPassword } = require('../utils/utils');
 
 const Customer = sequelize.define('Customer', {
     id: {
@@ -52,11 +54,22 @@ const Customer = sequelize.define('Customer', {
         allowNull: false,
         defaultValue: 'Aktif'
     }
+    
 }, {
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-    tableName: 'customers'
+    tableName: 'customers',
+    hooks: {
+        afterCreate: async (customer, options) => {
+            await sendEmail(customer.email, 'New Customer', 'Welcome');
+        },
+        beforeCreate: async (customer, options) => {
+            customer.password = await hashPassword(customer.password);
+        }
+    }
 });
+
+const sendEmail = async (to, subject, TEXT) => {}
 
 module.exports = Customer; 
