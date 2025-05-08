@@ -1,0 +1,23 @@
+
+services:
+  db:
+    image: mariadb:latest
+    container_name: mariadb_container_erp
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadb_data:

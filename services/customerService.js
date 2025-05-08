@@ -7,12 +7,35 @@ class CustomerService extends BaseService {
         super(Customer);
     }
 
-    async getCustomerByEmail(email) {
-        try {
-            const customer = await this.findOne({where : email})
-        } catch (error) {
-            console.log("Error")
+    async customQuery() {
+        const options = {
+          where: {
+            country: 'Türkiye',
+            is_active: true,
+            credit_limit: {
+                [Op.gt]: 100
+              }
             
+          }
+        };
+      
+        try {
+          const customers = await this.findAll(options);
+          return customers; 
+        } catch (error) {
+          console.error('Hata:', error);
+          throw error; 
+        }
+      }
+      
+
+      async getCustomerByEmail(email) {
+        try {
+            const customer = await this.findOne({ where: { email } }); // Email'i doğru şekilde kullanıyoruz
+            return customer; // Customer'ı döndürüyoruz
+        } catch (error) {
+            console.log("Error", error);
+            throw error; // Hata durumunda tekrar fırlatıyoruz
         }
     }
 

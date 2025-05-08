@@ -2,21 +2,14 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize(
-    process.env.DB_NAME || 'erp_db',
-    process.env.DB_USER || 'postgres',
-    process.env.DB_PASSWORD || 'postgres',
-    {
-        host: process.env.DB_HOST || 'localhost',
-        port: process.env.DB_PORT || 5432,
-        dialect: 'postgres',
-        logging: false,
-        pool: {
-            max: 5,
-            min: 0,
-            acquire: 30000,
-            idle: 10000
-        }
-    }
+  process.env.DB_NAME || 'user_db',       // Veritabanı adı
+  process.env.DB_USER || 'user',          // Kullanıcı adı
+  process.env.DB_PASSWORD || 'userpassword', // Kullanıcı şifresi
+  {
+    host: process.env.DB_HOST || 'db',    // MariaDB servisi
+    dialect: 'mariadb',                   // MariaDB kullan
+    logging: false,                       // Logları kapat
+  }
 );
 
-module.exports = sequelize; 
+module.exports = sequelize;
