@@ -2,7 +2,7 @@ const customerService = require('../services/customerService');
 
 class CustomerController {
 
-    // get user by email
+   
     async getCustomerByEmail(req, res) {
         try {
             
@@ -20,7 +20,6 @@ class CustomerController {
     }
 
 
-    // Tüm müşterileri getir
     async getAllCustomers(req, res) {
         try {
             const customers = await customerService.findAll();
@@ -36,7 +35,7 @@ class CustomerController {
         }
     }
 
-    // Aktif müşterileri getir
+
     async getActiveCustomers(req, res) {
         try {
             const customers = await customerService.getActiveCustomers();
@@ -52,7 +51,7 @@ class CustomerController {
         }
     }
 
-    // ID'ye göre müşteri getir
+
     async getCustomerById(req, res) {
         try {
             const customer = await customerService.findByID(req.params.id);
@@ -74,7 +73,7 @@ class CustomerController {
         }
     }
 
-    // Yeni müşteri oluştur
+ 
     async createCustomer(req, res) {
         try {
             const customer = await customerService.create(req.body);
@@ -90,7 +89,7 @@ class CustomerController {
         }
     }
 
-    // Müşteri güncelle
+
     async updateCustomer(req, res) {
         try {
             const customer = await customerService.update(req.params.id, req.body);
@@ -112,7 +111,7 @@ class CustomerController {
         }
     }
 
-    // Müşteri sil
+  
     async deleteCustomer(req, res) {
         try {
             const result = await customerService.deleteCustomer(req.params.id);
@@ -128,7 +127,7 @@ class CustomerController {
         }
     }
 
-    // Müşteriyi aktif/pasif yap
+
     async toggleCustomerActive(req, res) {
         try {
             const customer = await customerService.toggleActive(req.params.id);

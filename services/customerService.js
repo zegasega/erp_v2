@@ -31,11 +31,11 @@ class CustomerService extends BaseService {
 
       async getCustomerByEmail(email) {
         try {
-            const customer = await this.findOne({ where: { email } }); // Email'i doğru şekilde kullanıyoruz
-            return customer; // Customer'ı döndürüyoruz
+            const customer = await this.findOne({ where: { email } });
+            return customer; 
         } catch (error) {
             console.log("Error", error);
-            throw error; // Hata durumunda tekrar fırlatıyoruz
+            throw error; 
         }
     }
 
@@ -79,6 +79,20 @@ class CustomerService extends BaseService {
         }
     }
 
+    async getPasiveAllCustomers(){
+        const options = {
+            where : {
+                active: false,
+            },
+            order: [['createdAt', 'DESC']], 
+        };
+        try {
+            return await this.findAll(options)
+        } catch (error) {
+            throw error
+            
+        }
+    }
     async findByID(id) {
         try {
             return await this.findByPk(id);
